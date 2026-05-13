@@ -4,8 +4,8 @@
 #   flyctl launch --no-deploy           # first time; pick app name + region
 #   flyctl deploy
 
-app = "telegallery-backend"
-primary_region = "iad"
+app = "telegallery-emni786"
+primary_region = "sin"
 
 [build]
   dockerfile = "Dockerfile"
