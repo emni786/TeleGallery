@@ -37,7 +37,7 @@ jobs:
           cache: 'pip'
           cache-dependency-path: backend/requirements.txt
       - run: pip install -r requirements.txt
-      - run: python -m py_compile app.py telegram_uploader.py config.py
+      - run: python -m py_compile app.py flask_api.py telegram_uploader.py config.py
       - name: Import smoke check
         run: |
           python -c "import app; print('app importable')"
