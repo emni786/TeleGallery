@@ -1,0 +1,26 @@
+[project]
+name = "telegallery-backend"
+version = "0.1.0"
+description = "TeleGallery stateless Flask + Pyrogram backend (ASGI-wrapped via FastAPI)."
+requires-python = ">=3.11"
+dependencies = [
+    "flask==3.0.3",
+    "flask-cors==4.0.1",
+    "fastapi==0.115.0",
+    "uvicorn[standard]==0.32.0",
+    "a2wsgi==1.10.7",
+    "gunicorn==22.0.0",
+    "requests==2.32.3",
+    "pyrogram==2.0.106",
+    "tgcrypto==1.2.5",
+    "supabase==2.7.4",
+    "pillow==10.4.0",
+    "python-dotenv==1.0.1",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["app", "flask_api", "config", "telegram_uploader"]

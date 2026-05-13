@@ -47,18 +47,39 @@ cd backend
 python -m venv .venv
 source .venv/bin/activate           # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-python app.py
+uvicorn app:app --host 0.0.0.0 --port 8765 --reload
 ```
 
-The server listens on `http://localhost:8000`.
+The server listens on `http://localhost:8765`.
 
-## Deploy to Railway
+> The REST API lives in `flask_api.py` (a Flask app). `app.py` wraps that
+> Flask app in a FastAPI shell via `a2wsgi.WSGIMiddleware` so the project
+> exposes a single ASGI `app:app` symbol that gunicorn / uvicorn / Fly.io
+> can all import.
+
+## Deploy
+
+### Fly.io (recommended)
+
+Already configured via `fly.toml` + `Dockerfile`:
+
+```bash
+cd backend
+flyctl launch --no-deploy   # first time only; pick app name + region
+flyctl deploy
+```
+
+Fly will give you a URL like `https://telegallery-backend.fly.dev` — paste
+that into the **Backend URL** field on the TeleGallery onboarding screen.
+
+### Railway
 
 1. Push the repo to GitHub.
 2. Create a new Railway project from your repo.
 3. Set the root directory to `backend/`.
-4. Railway will pick up `Procfile` and `requirements.txt` automatically.
-5. No env vars need to be set — the backend is stateless.
+4. Railway will pick up the `Dockerfile` automatically; no env vars needed.
 
-The public URL Railway gives you is what you'll paste into the **Backend URL**
-field on the TeleGallery onboarding screen.
+### Any Docker host
+
+`Dockerfile` builds a standalone image that listens on `$PORT` (default
+`8080`). Run anywhere that can host a container.

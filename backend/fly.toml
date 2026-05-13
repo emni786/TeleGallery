@@ -1,0 +1,26 @@
+# TeleGallery backend (FastAPI-wrapped Flask + Pyrogram) — Fly.io config.
+# Deploy:
+#   cd backend
+#   flyctl launch --no-deploy           # first time; pick app name + region
+#   flyctl deploy
+
+app = "telegallery-backend"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8080"
+  MAX_UPLOAD_MB = "2048"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
