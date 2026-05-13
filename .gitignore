@@ -18,3 +18,4 @@ backend/*.session-journal
 
 frontend/android/
 frontend/ios/
+test-plan.md

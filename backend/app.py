@@ -111,7 +111,6 @@ def health():
 def setup_test():
     """Validate every credential the user typed in onboarding."""
     creds = _tg_creds()
-    sb = _supabase_client()
     result = {
         "telegram": {"ok": False, "detail": ""},
         "channel": {"ok": False, "detail": ""},
@@ -138,6 +137,17 @@ def setup_test():
             }
         except Exception as exc:
             result["channel"]["detail"] = str(exc)
+
+    sb = None
+    sb_url = request.headers.get("X-Supabase-Url", "").strip()
+    sb_key = request.headers.get("X-Supabase-Key", "").strip()
+    if not sb_url or not sb_key:
+        result["supabase"]["detail"] = "missing url or anon key"
+    else:
+        try:
+            sb = create_client(sb_url, sb_key)
+        except Exception as exc:
+            result["supabase"]["detail"] = f"client init failed: {exc}"
 
     if sb is not None:
         try:
